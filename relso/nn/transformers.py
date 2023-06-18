@@ -43,8 +43,9 @@ class CosineWarmupScheduler(optim.lr_scheduler._LRScheduler):
         return lr_factor
 
 
-
-def scaled_dot_product_attention(q, k_short, v_short, mask=None):
+## ja bym to przemianowała na z 'attention na końcu', ale do tego trzeba zmienić wszystkie wystąpienia, więc na razie zostawiam starą nazwę
+#def scaled_dot_product_attention(q, k_short, v_short, mask=None):
+def scaled_dot_product(q, k_short, v_short, mask=None):
     d_k = k_short.size()[-1] ##d_k == d_q (== d_v as in original Transformer)
     attn_logits = torch.matmul(q, k_short.transpose(-2, -1))
     attn_logits = attn_logits / math.sqrt(d_k)
