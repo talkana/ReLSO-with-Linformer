@@ -43,15 +43,17 @@ class CosineWarmupScheduler(optim.lr_scheduler._LRScheduler):
         return lr_factor
 
 
-def scaled_dot_product(q, k, v, mask=None):
-    d_k = q.size()[-1]
-    attn_logits = torch.matmul(q, k.transpose(-2, -1))
+
+def scaled_dot_product_attention(q, k_short, v_short, mask=None):
+    d_k = k_short.size()[-1] ##d_k == d_q (== d_v as in original Transformer)
+    attn_logits = torch.matmul(q, k_short.transpose(-2, -1))
     attn_logits = attn_logits / math.sqrt(d_k)
     if mask is not None:
-        attn_logits = attn_logits.masked_fill(mask == 0, -9e15)
+        attn_logits = attn_logits.masked_fill(mask == 0, -9e15) #??: czy to tak zostaje?
     attention = F.softmax(attn_logits, dim=-1)
-    values = torch.matmul(attention, v)
+    values = torch.matmul(attention, v_short)
     return values, attention
+
 
 
 class PositionalEncoding(nn.Module):
