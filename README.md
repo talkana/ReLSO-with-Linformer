@@ -1,3 +1,18 @@
+## TODO
+### przed puszczeniem treningu na TAPE:
+- [ ] uzupełnić `_reset_params()` w klasie `MultiHeadLinformerAttention` i odkomentować jej wywołanie w `__init__` (krótkie)
+- [ ] rozwiązać kwestię masek (zostawić jak są / zmodyfikować do Linformera / usunąć w ogóle) -- w zależności od tego, co wyjdzie z rozeznania tego tematu (...?)
+- [ ] zamienić wszędzie wystąpienia `MHA` na `MultiHeadLinformerAttention` (krótkie)
+- [ ] dodać kod mierzący zużycie pamięci (krótkie)
+- [ ] popatrzeć zewnętrznym okiem czy w kodzie do linformera wszystko jest jak ma być
+- [ ] (ewentualnie: zmniejszyć liczbę permutacji tensorów + skompresować do mniejszej liczby linii (dość krótkie)) \[->Gosia\]
+- [ ] zobaczyć czy wszystko zaczyna się dobrze trenować
+- [ ] **puścić trening :>** (do: wt - do końca dnia)
+
+### plan dalszy 
+- [ ] <trzeba bedzie przekminić jak porównywać wyniki i co dokładnie> 
+
+
 
 <div align="center">    
  
