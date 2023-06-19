@@ -85,12 +85,156 @@ class PositionalEncoding(nn.Module):
         return x
 
 
+
+
+
+
+####################################################################
+#### SUPER-DIRTY CODE FOR LINFORMER MULTI-HEAD ATTENTION ##########
+
+class MultiHeadLinformerAttention(nn.Module):
+    def __init__(self, input_dim, input_seq_len, h_times_embed_dim, num_heads, k):
+        """
+            input_dim - embedding vect dim * num_heads
+            input_seq_len - length of input sequences (must be constant among sequences)
+            h_times_embed_dim - d_v * num_heads (d_v = d_k = d_q; dim of single query/key/val vector)
+            num_heads - nuber of heads in attention block
+            k - length of sequence after E/F projections
+        """
+        super().__init__()
+        assert h_times_embed_dim % num_heads == 0, "Embedding dimension must be 0 modulo number of heads." ## as in original relso implementation
+
+        self.num_heads = num_heads
+        self.d_v = h_times_embed_dim // num_heads #(d_v = d_k = d_q)
+
+
+        # Projecting input to Q,K,V matrices for all heads (stacked for efficiency)
+        self.qkv_proj = nn.Linear(input_dim, h_times_embed_dim*3, bias=False)
+
+        #Projecting sequence of keys -- from length=input_seq_len to length=k ()
+        self.k_projections = nn.ModuleList([nn.Linear(input_seq_len, k, bias=False) for i in range(num_heads)]) # projection matrices Ei, i=1,..,num_heads
+        
+        #Projecting sequence of values -- from length=input_seq_len to length=k
+        self.v_projections = nn.ModuleList([nn.Linear(input_seq_len, k, bias=False) for i in range(num_heads)]) # projection matrices Fi, i=1,..,num_heads
+
+        ##### pasted from MultiHeadAttention ########
+        self.o_proj = nn.Linear(embed_dim, embed_dim)
+        #self._reset_parameters()
+        ############################################
+
+        # All Ei and Fi projection matrices stacked together for efficiency, i=1,...,num_heads
+        # self.ef_proj = nn.Linear(input_seq_len, 2*k, bias=False)
+        # self.q_proj = nn.Linear(input_dim, h_times_embed_dim, bias=False)
+        # self.k_proj = nn.Linear(input_dim, h_times_embed_dim, bias=False)
+        # self.v_proj = nn.Linear(input_dim, h_times_embed_dim, bias=False)
+
+
+    # def _reset_parameters(self):
+    #     # Original Transformer initialization, see PyTorch documentation
+    #     nn.init.xavier_uniform_(self.qkv_proj.weight)
+    #     self.qkv_proj.bias.data.fill_(0)
+    #     nn.init.xavier_uniform_(self.o_proj.weight)
+    #     self.o_proj.bias.data.fill_(0)
+
+
+
+    def forward(self, x, mask=None, return_attention=False):
+
+        print(f"{num_heads=}")
+        print(f"h_times_embed_dim={self.d_v*num_heads}\n")
+
+
+        print("\tCHECKPOINT 1")
+        batch_size, seq_length, embed_dim = x.size() # ????? embed? nie input (to pewnie będzie h x input == h x embed)
+        print(f"\t{x.size()=}\n") #x.size() = [Batch, SeqLen, InputDim]
+
+
+        print("\tCHECKPOINT 2")
+        qkv = self.qkv_proj(x) #for each input vec --> q,k,v concatenated together, and this is done h times (so dim now is (d_q + d_k + d_v)*num_heads )
+        print(f"\t{self.qkv_proj=}")
+        print(f"\t{qkv.size()=}\n")
+
+        print("\tCHECKPOINT 3")
+        # Separate Q, K, V from linear output
+        qkv = qkv.reshape(batch_size, seq_length, self.num_heads, 3*self.d_v) #[Batch, SeqLen, NumHeads, 3*EmbedDim]
+        print(f"\tqkv.size() after reshaping: {qkv.size()=}")
+
+        qkv = qkv.permute(0, 2, 1, 3) # [Batch, NumHeads, SeqLen, 3*EmbedDim]
+        print(f"\tqkv.size() after permuting: {qkv.size()=}")
+
+        q, k, v = qkv.chunk(3, dim=-1) # [Batch, NumHeads, SeqLen, 1*EmbedDim]
+        print(f"\tshape of q, k, v after chunk: {q.size()=}\n")
+
+
+        print("\tCHECKPOINT 4 -- projecting keys")
+        # Project K and V on seqences of length k
+        k = k.permute(0,2,3, 1) # [Batch, SeqLen, EmbedDim, NumHeads]
+        print(f"\tk.size() after permuting: {k.size()=}")
+
+        ks = k.chunk(self.num_heads, dim=-1) # [t], t.shape=[Batch, SeqLen, EmbedDim, 1]
+        ks = [torch.squeeze(k, dim=-1) for k in ks]
+        print(f"\tlen(ks) after chunk: {len(ks)=}") #num_heads
+        print(f"\tsize of single element of ks: {ks[0].size()=}") #[Batch, SeqLen, EmbedDim]
+
+        ks = [k.permute(0,2,1) for k in ks]
+        k_shorts = [k_proj_i(k) for k_proj_i, k in zip(self.k_projections, ks)] #each el. is of shape [Batch, EmbedDim, SeqLen']
+        print(f"\t{len(k_shorts)=}")
+
+        #un-chunk to get one concatenated tensor #we want: [Bath, NumHeads, SeqLen', EmbedDim]
+        k_shorts = [torch.unsqueeze(k,dim=-1) for k in k_shorts] # [Batch, EmbedDim, SeqLen', 1]
+        print(f"\t{k_shorts[0].size()=}")
+        k_short = torch.cat(k_shorts, dim=-1) #[Batch, EmbedDim, SeqLen', NumHeads]
+        print(f"\t{k_short.size()=}")
+        k_short = k_short.permute(0,3,2,1)
+
+
+        print("\tCHECKPOINT 5")
+        v = v.permute(0,2,3, 1) # [Batch, SeqLen, EmbedDim, NumHeads]
+
+        vs = v.chunk(self.num_heads, dim=-1) # [t], t.shape=[Batch, SeqLen, EmbedDim, 1]
+        vs = [torch.squeeze(v, dim=-1) for v in vs]
+        vs = [v.permute(0,2,1) for v in vs]
+        v_shorts = [v_proj_i(v) for v_proj_i, v in zip(self.v_projections, vs)] 
+
+        #un-chunk to get one concatenated tensor
+        v_shorts = [torch.unsqueeze(v,dim=-1) for v in v_shorts] # [Batch, EmbedDim, SeqLen', 1]
+        v_short = torch.cat(v_shorts, dim=-1) #[Batch, EmbedDim, SeqLen', NumHeads]
+        v_short = v_short.permute(0,3,2,1)
+
+
+        print("\tCHECKPOINT 6 -- ATTENTION")
+        # Calculate attention weights and value outputs
+        values, attention = scaled_dot_product(q, k_short, v_short, mask=mask)
+        values = values.permute(0, 2, 1, 3) # [Batch, SeqLen, Head, Dims]
+        values = values.reshape(batch_size, seq_length, embed_dim)
+        o = self.o_proj(values)
+
+        if return_attention:
+            return o, attention
+        else:
+            return o
+            
+####################################################################
+####################################################################
+
+
+
+
         
 class MultiheadAttention(nn.Module):
 
     def __init__(self, input_dim, embed_dim, num_heads):
+        """
+            input_dim - ???
+            embed_dim - ???
+            num_heads - number of heads in attention block
+        """
         super().__init__()
         assert embed_dim % num_heads == 0, "Embedding dimension must be 0 modulo number of heads."
+
+        print(f"\t{input_dim=}") #100 in original training
+        print(f"\t{embed_dim=}") # 100 in original training
+        print(f"\t{num_heads=}") #4 heads in block in original code
 
         self.embed_dim = embed_dim
         self.num_heads = num_heads
@@ -113,16 +257,30 @@ class MultiheadAttention(nn.Module):
 
 
     def forward(self, x, mask=None, return_attention=False):
-        batch_size, seq_length, embed_dim = x.size()
-        qkv = self.qkv_proj(x)
+
+        print("\n\tForward pass of MultiheadAttention")
+        print(f"\t{x.size()=}")
+
+        batch_size, seq_length, embed_dim = x.size() # [64, 20, 100] --> [Batch, SeqLen, h_times_embed_size]
+        qkv = self.qkv_proj(x) 
+
+        #printing layer and layer-output shapes
+        print(f"\t{self.qkv_proj=}") #Linear(in_features=100, out_features=300, bias=True) --> in_faetures = h_times_embed_size, out_features=3*h_times_embed_size
+        print(f"\t{qkv.size()=}\n") #[64, 20, 4, 75] --> [Batch, SeqLen, NumHeads, 3*EmbedDim]
 
         # Separate Q, K, V from linear output
         qkv = qkv.reshape(batch_size, seq_length, self.num_heads, 3*self.head_dim)
+        print(f"\tqkv.size() after reshaping: {qkv.size()}")
         qkv = qkv.permute(0, 2, 1, 3) # [Batch, Head, SeqLen, Dims]
+        print(f"\tqkv.size() after permuting: {qkv.size()}")
         q, k, v = qkv.chunk(3, dim=-1)
+        print(f"\tq.size() after chunk: {q.size()}")
+        print(f"\tk.size() after chunk: {k.size()}")
+        print(f"\tv.size() after chunk: {v.size()}\n")
 
         # Determine value outputs
         values, attention = scaled_dot_product(q, k, v, mask=mask)
+        print(f"\tvalues.size() after attention computation: {values.size()}")
         values = values.permute(0, 2, 1, 3) # [Batch, SeqLen, Head, Dims]
         values = values.reshape(batch_size, seq_length, embed_dim)
         o = self.o_proj(values)
