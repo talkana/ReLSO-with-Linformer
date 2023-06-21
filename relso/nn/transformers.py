@@ -224,7 +224,7 @@ class MultiheadAttention(nn.Module):
 
 class EncoderBlock(nn.Module):
 
-    def __init__(self, input_dim, num_heads, dim_feedforward, dropout=0.0):
+    def __init__(self, input_dim, num_heads, dim_feedforward, seq_len, use_linformer, dropout=0.0, k=20):  # todo: allow for changing k
         """
         Inputs:
             input_dim - Dimensionality of the input
@@ -235,7 +235,10 @@ class EncoderBlock(nn.Module):
         super().__init__()
 
         # Attention layer
-        self.self_attn = MultiheadAttention(input_dim, input_dim, num_heads)
+        if use_linformer:
+            self.self_attn = MultiHeadLinformerAttention(input_dim, seq_len, input_dim, num_heads, k)
+        else:
+            self.self_attn = MultiheadAttention(input_dim, input_dim, num_heads)
 
         # Two-layer MLP
         self.linear_net = nn.Sequential(

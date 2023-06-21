@@ -47,6 +47,8 @@ if __name__ == "__main__":
     parser.add_argument("--project_name", default="relso_project", type=str)
 
     # training arguments
+    parser.add_argument("--use_linformer", default=True, type=str2bool)
+
     parser.add_argument("--alpha_val", default=1.0, type=float)
     parser.add_argument("--beta_val", default=0.0005, type=float)
     parser.add_argument("--gamma_val", default=1.0, type=float)
