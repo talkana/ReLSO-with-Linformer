@@ -71,7 +71,7 @@ class PositionalEncoding(nn.Module):
 #### SUPER-DIRTY CODE FOR LINFORMER MULTI-HEAD ATTENTION ##########
 
 class MultiHeadLinformerAttention(nn.Module):
-    def __init__(self, input_dim, input_seq_len, h_times_embed_dim, num_heads, k):
+    def __init__(self, input_dim, input_seq_len, h_times_embed_dim, num_heads, k, mask):
         """
             input_dim - embedding vect dim * num_heads
             input_seq_len - length of input sequences (must be constant among sequences)
@@ -124,7 +124,7 @@ class MultiHeadLinformerAttention(nn.Module):
 
         # Separate Q, K, V from linear output
         qkv = qkv.view(batch_size, seq_length, self.num_heads,
-                          3 * self.d_v)  # [Batch, SeqLen, NumHeads, 3*SingleEmbedDim]
+                       3 * self.d_v)  # [Batch, SeqLen, NumHeads, 3*SingleEmbedDim]
         qkv = qkv.permute(0, 2, 1, 3)  # [Batch, NumHeads, SeqLen, 3*SingleEmbedDim]
         q, k, v = qkv.chunk(3, dim=-1)  # [Batch, SeqLen, NumHeads 1*SingleEmbedDim]
 
@@ -156,7 +156,7 @@ class MultiHeadLinformerAttention(nn.Module):
         v_short = v_short.permute(0, 3, 2, 1)
 
         # Calculate attention weights and value outputs
-        values, attention = scaled_dot_product_attention(q, k_short, v_short) # no mask
+        values, attention = scaled_dot_product_attention(q, k_short, v_short)  # no mask
         values = values.permute(0, 2, 1, 3)  # [Batch, SeqLen, Head, Dims]
         values = values.reshape(batch_size, seq_length, embed_dim)
         o = self.o_proj(values)
@@ -224,7 +224,8 @@ class MultiheadAttention(nn.Module):
 
 class EncoderBlock(nn.Module):
 
-    def __init__(self, input_dim, num_heads, dim_feedforward, seq_len, use_linformer, dropout=0.0, k=20):  # todo: allow for changing k
+    def __init__(self, input_dim, num_heads, dim_feedforward, seq_len, use_linformer, dropout=0.0,
+                 k=20):  # todo: allow for changing k
         """
         Inputs:
             input_dim - Dimensionality of the input
