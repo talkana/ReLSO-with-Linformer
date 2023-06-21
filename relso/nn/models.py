@@ -54,7 +54,7 @@ class relso1(BaseModel):
         self.gamma = hparams.gamma_val
 
         self.sigma = hparams.sigma_val
-        
+
         self.seq_len = hparams.seq_len
         self.use_linformer = hparams.use_linformer
 

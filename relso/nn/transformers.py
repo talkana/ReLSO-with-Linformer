@@ -71,7 +71,7 @@ class PositionalEncoding(nn.Module):
 #### SUPER-DIRTY CODE FOR LINFORMER MULTI-HEAD ATTENTION ##########
 
 class MultiHeadLinformerAttention(nn.Module):
-    def __init__(self, input_dim, input_seq_len, h_times_embed_dim, num_heads, k, mask):
+    def __init__(self, input_dim, input_seq_len, h_times_embed_dim, num_heads, k):
         """
             input_dim - embedding vect dim * num_heads
             input_seq_len - length of input sequences (must be constant among sequences)
@@ -114,7 +114,7 @@ class MultiHeadLinformerAttention(nn.Module):
     #     #self.qkv_proj.bias.data.fill_(0)
     #     #self.o_proj.bias.data.fill_(0)
 
-    def forward(self, x, return_attention=False):
+    def forward(self, x, return_attention=False, mask=None):
 
         batch_size, seq_length, embed_dim = x.size()  # ????? embed? nie input (to pewnie będzie h x input == h x embed)
         # x.size() = [Batch, SeqLen, InputDim]
