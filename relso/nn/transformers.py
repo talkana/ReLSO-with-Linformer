@@ -102,6 +102,7 @@ class MultiHeadLinformerAttention(nn.Module):
     def _reset_parameters(self):
         # Original Transformer initialization, see PyTorch documentation
         nn.init.xavier_uniform_(self.qkv_proj.weight)
+        print("Resetting parameters")
         for m in self.modules():
             print(f"Initialising module: {m}")
             if isinstance(m, nn.Linear):
