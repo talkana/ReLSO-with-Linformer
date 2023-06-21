@@ -97,22 +97,17 @@ class MultiHeadLinformerAttention(nn.Module):
                                             range(num_heads)])  # projection matrices Fi, i=1,..,num_heads
 
         self.o_proj = nn.Linear(h_times_embed_dim, h_times_embed_dim)
-        # self._reset_parameters()
+        self._reset_parameters()
 
-    # def _reset_parameters(self):
-    #     # Original Transformer initialization, see PyTorch documentation
-    #     #original
-    #     #nn.init.xavier_uniform_(self.qkv_proj.weight)
-
-    #     #Added 
-    #     # for l in self.k_projections:
-    #     #     nn.init.xavier_uniform_(l)
-    #     # for l in self.v_projections:
-    #     #     nn.init.xavier_uniform_(l)
-    #     # nn.init.xavier_uniform_(self.o_proj.weight)
-
-    #     #self.qkv_proj.bias.data.fill_(0)
-    #     #self.o_proj.bias.data.fill_(0)
+    def _reset_parameters(self):
+        # Original Transformer initialization, see PyTorch documentation
+        nn.init.xavier_uniform_(self.qkv_proj.weight)
+        for m in self.modules():
+            print(f"Initialising module: {m}")
+            if isinstance(m, nn.Linear):
+                nn.init.xavier_uniform_(m.weight)
+                if m.bias is not None:
+                    nn.init.constant_(m.bias, 0.0)
 
     def forward(self, x, return_attention=False, mask=None):
 
