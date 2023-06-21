@@ -218,7 +218,7 @@ class MultiheadAttention(nn.Module):
 class EncoderBlock(nn.Module):
 
     def __init__(self, input_dim, num_heads, dim_feedforward, seq_len, use_linformer, dropout=0.0,
-                 k=20):  # todo: allow for changing k
+                 k=20): 
         """
         Inputs:
             input_dim - Dimensionality of the input
