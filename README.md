@@ -1,12 +1,15 @@
+## DONE: 
+- rozwiązać kwestię masek (zostawić jak są / zmodyfikować do Linformera / usunąć w ogóle) -- w zależności od tego, co wyjdzie z rozeznania
+- zamienić wszędzie wystąpienia `MHA` na `MultiHeadLinformerAttention` (krótkie)
+- uzupełnić `_reset_params()` w klasie `MultiHeadLinformerAttention` i odkomentować jej wywołanie w `__init__` (krótkie)
+
 ## TODO
 ### przed puszczeniem treningu na TAPE:
-- [ ] uzupełnić `_reset_params()` w klasie `MultiHeadLinformerAttention` i odkomentować jej wywołanie w `__init__` (krótkie)
-- [ ] rozwiązać kwestię masek (zostawić jak są / zmodyfikować do Linformera / usunąć w ogóle) -- w zależności od tego, co wyjdzie z rozeznania tego tematu (...?)
-- [ ] zamienić wszędzie wystąpienia `MHA` na `MultiHeadLinformerAttention` (krótkie)
+- [ ] dodać parametr k (wymiar E i F w linformerze) do argparse'a  
 - [ ] dodać kod mierzący zużycie pamięci (krótkie)
 - [ ] popatrzeć zewnętrznym okiem czy w kodzie do linformera wszystko jest jak ma być
 - [ ] (ewentualnie: zmniejszyć liczbę permutacji tensorów + skompresować do mniejszej liczby linii (dość krótkie)) \[->Gosia\]
-- [ ] zobaczyć czy wszystko zaczyna się dobrze trenować
+- [ ] zobaczyć czy wszystko zaczyna się dobrze trenować 
 - [ ] **puścić trening :>** (do: wt - do końca dnia)
 
 ### plan dalszy 
