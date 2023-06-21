@@ -1,26 +1,18 @@
-import datetime
-import time
-import os
-import numpy as np
 import argparse
+import datetime
+import os
+import time
 from argparse import ArgumentParser
 
-# from sklearn.metrics import r2_score
-# import wandb
-
-import torch
-from torch import nn, optim
-
+import numpy as np
 import pytorch_lightning as pl
 from pytorch_lightning import Trainer
-from pytorch_lightning.loggers import WandbLogger
 from pytorch_lightning.callbacks.early_stopping import EarlyStopping
-from pytorch_lightning.core.lightning import LightningModule
+from pytorch_lightning.loggers import WandbLogger
 
-from relso.nn.models import relso1
 import relso.data as hdata
-from relso.utils import data_utils, eval_utils
-
+from relso.nn.models import relso1
+from relso.utils import eval_utils
 
 ########################
 # CONSTANTS
@@ -55,6 +47,8 @@ if __name__ == "__main__":
     parser.add_argument("--project_name", default="relso_project", type=str)
 
     # training arguments
+    parser.add_argument("--use_linformer", default=True, type=str2bool)
+
     parser.add_argument("--alpha_val", default=1.0, type=float)
     parser.add_argument("--beta_val", default=0.0005, type=float)
     parser.add_argument("--gamma_val", default=1.0, type=float)

@@ -55,6 +55,9 @@ class relso1(BaseModel):
 
         self.sigma = hparams.sigma_val
 
+        self.seq_len = hparams.seq_len
+        self.use_linformer = hparams.use_linformer
+
         try:
             self.eta = hparams.eta_val
         except:
@@ -116,6 +119,8 @@ class relso1(BaseModel):
             num_heads=self.nhead,
             dim_feedforward=self.hidden_dim,
             dropout=self.probs,
+            use_linformer=self.use_linformer,
+            seq_len=self.seq_len
         )
         # make decoder)
         self._build_decoder(hparams)
