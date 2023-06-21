@@ -48,6 +48,7 @@ if __name__ == "__main__":
 
     # training arguments
     parser.add_argument("--use_linformer", default=True, type=str2bool)
+    parser.add_argument("--linformer_k", default=50, type=str2bool)
 
     parser.add_argument("--alpha_val", default=1.0, type=float)
     parser.add_argument("--beta_val", default=0.0005, type=float)
@@ -81,7 +82,7 @@ if __name__ == "__main__":
     parser.add_argument("--seqdist_cutoff", default=None)
 
     # LSTM
-    parser.add_argument("--embedding_dim", default=100, type=int)
+    parser.add_argument("--embedding_dim", default=20, type=int)
     parser.add_argument("--bidirectional", default=True, type=bool)
 
     # CNN
