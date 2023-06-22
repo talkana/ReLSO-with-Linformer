@@ -48,7 +48,7 @@ if __name__ == "__main__":
 
     # training arguments
     parser.add_argument("--use_linformer", default=True, type=str2bool)
-    parser.add_argument("--linformer_k", default=50, type=str2bool)
+    parser.add_argument("--linformer_k", default=50, type=int)
 
     parser.add_argument("--alpha_val", default=1.0, type=float)
     parser.add_argument("--beta_val", default=0.0005, type=float)
