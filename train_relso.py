@@ -82,7 +82,7 @@ if __name__ == "__main__":
     parser.add_argument("--seqdist_cutoff", default=None)
 
     # LSTM
-    parser.add_argument("--embedding_dim", default=20, type=int)
+    parser.add_argument("--embedding_dim", default=100, type=int)
     parser.add_argument("--bidirectional", default=True, type=bool)
 
     # CNN
