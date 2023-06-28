@@ -436,7 +436,7 @@ def grad_ascent(initial_embedding, model, N_steps, lr, cycle=False,
     # data logging
     embed_dim = initial_embedding.shape[-1]
     out_embedding_array = np.zeros((N_steps, embed_dim))
-    out_fit_array = np.zeros((N_steps))
+    out_fit_array = np.zeros(N_steps)
     
     # initial step
     curr_embedding = torch.tensor(initial_embedding, requires_grad=True).reshape(-1, embed_dim)
