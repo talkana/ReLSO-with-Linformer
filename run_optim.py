@@ -27,9 +27,9 @@ if __name__ == '__main__':
     parser.add_argument('--alpha', required=False, type=float)
     parser.add_argument('--delta', required=False, default='adaptive', type=str)
     parser.add_argument('--k', required=False, default=5, type=float,
-                        description="the value of k that influences the adaptive delta")
+                        help="the value of k that influences the adaptive delta")
     parser.add_argument('--k_linformer', required=False, default=25, type=float,
-                        description="k from the linformer architecture")
+                        help="k from the linformer architecture")
 
     cl_args = parser.parse_args()
 
