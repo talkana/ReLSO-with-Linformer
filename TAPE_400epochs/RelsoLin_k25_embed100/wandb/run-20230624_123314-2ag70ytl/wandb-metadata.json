@@ -1,0 +1,30 @@
+{
+    "root": "C:\\Users\\maria\\Documents\\Bioinformatyka_mgr\\NLP\\NLP_project\\ReLSO-with-Linformer-gosia",
+    "program": "C:\\Users\\maria\\Documents\\Bioinformatyka_mgr\\NLP\\NLP_project\\ReLSO-with-Linformer-gosia\\train_relso.py",
+    "startedAt": "2023-06-24T12:33:16.654592",
+    "host": "Asus_Chleb",
+    "username": "maria",
+    "executable": "C:\\Users\\maria\\anaconda3\\envs\\relso\\python.exe",
+    "os": "Windows-10-10.0.22621-SP0",
+    "python": "3.9.16",
+    "cpu_count": 8,
+    "args": [
+        "--data",
+        "TAPE",
+        "--n_epochs",
+        "400",
+        "--n_gpus",
+        "1",
+        "--linformer_k",
+        "25",
+        "--embedding_dim",
+        "100"
+    ],
+    "state": "finished",
+    "jobType": null,
+    "mode": "run",
+    "name": "run_relso_TAPE",
+    "project": "relso_project",
+    "heartbeatAt": "2023-06-24T19:51:12.661017",
+    "exitcode": 0
+}
