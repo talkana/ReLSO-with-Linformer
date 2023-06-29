@@ -73,12 +73,13 @@ if __name__ == '__main__':
 
     # randomly initialize point
     n_steps = cl_args.n_steps
-    num_inits = 30
+    num_inits = 10
     num_optim_algs = 1
     optim_algo_names = ['Gradient Ascent']
 
     optim_embedding_traj_array = np.zeros((num_inits, num_optim_algs, n_steps, embeddings.shape[-1]))
     optim_fitness_traj_array = np.zeros((num_inits, num_optim_algs, n_steps))
+    optim_sequences = np.zeros((num_inits, 22, data.seq_len))
 
     if cl_args.det_inits:
         print('deterministic seeds selected!')
@@ -104,12 +105,12 @@ if __name__ == '__main__':
 
         # Gradient Ascent
         print("\n")
-        embedding_array_ga, fitness_array_ga, out_seq_array = optim_algs.grad_ascent(initial_embedding=init_point.copy(),
+        embedding_array_ga, fitness_array_ga, out_seq_array_ga = optim_algs.grad_ascent(initial_embedding=init_point.copy(),
                                                                       model=model,
                                                                       N_steps=n_steps,
                                                                       lr=0.1)
-        print(f"Shape of the first sequence: {out_seq_array[0].shape}, number of sequences: {len(out_seq_array)}")
-        print(f"First sequence: {out_seq_array[0]}")
+        last_seq = out_seq_array_ga[-1].squeeze()  # shape 22 * seqlen
+        optim_sequences[run_indx] = last_seq
         print(f'shape of output embedding array: {embedding_array_ga.shape}')
         print('init embed from output: {}'.format(embedding_array_ga[0][:10]))
 
@@ -124,6 +125,7 @@ if __name__ == '__main__':
     print("saving embeddings")
     np.save(save_dir + 'optimization_embeddings.npy', optim_embedding_traj_array)
     np.save(save_dir + 'optimization_fitnesses.npy', optim_fitness_traj_array)
+    np.save(save_dir + 'optimal_sequences.npy', optim_sequences)
 
     # max fitnesss array shape: num_algos x num_runs
     print("logging max fitness values")
