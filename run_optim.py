@@ -26,10 +26,8 @@ if __name__ == '__main__':
     parser.add_argument('--det_inits', default=False, action='store_true')
     parser.add_argument('--alpha', required=False, type=float)
     parser.add_argument('--delta', required=False, default='adaptive', type=str)
-    parser.add_argument('--k', required=False, default=5, type=float,
-                        description="the value of k that influences the adaptive delta")
-    parser.add_argument('--k_linformer', required=False, default=25, type=float,
-                        description="k from the linformer architecture")
+    parser.add_argument('--k', required=False, default=1, type=int,
+                        help="the value of k that influences the adaptive delta")
 
     cl_args = parser.parse_args()
 
