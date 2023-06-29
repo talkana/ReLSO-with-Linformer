@@ -479,6 +479,6 @@ def grad_ascent(initial_embedding, model, N_steps, lr, cycle=False,
         # save step i info
         out_embedding_array[step] = curr_embedding.detach().numpy()
         out_fit_array[step] = curr_fit.detach().numpy()
-        out_seq_array.append(curr_seq)
+        out_seq_array.append(curr_seq.detach().numpy())
         
     return out_embedding_array, out_fit_array, out_seq_array
