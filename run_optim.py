@@ -75,12 +75,20 @@ if __name__ == '__main__':
 
     # randomly initialize point
     n_steps = cl_args.n_steps
-    num_inits = embeddings.shape[0]
-    num_optim_algs = 6
+    num_inits = 30
+    num_optim_algs = 1
     optim_algo_names = ['Gradient Ascent']
 
     optim_embedding_traj_array = np.zeros((num_inits, num_optim_algs, n_steps, embeddings.shape[-1]))
     optim_fitness_traj_array = np.zeros((num_inits, num_optim_algs, n_steps))
+
+    if cl_args.det_inits:
+        print('deterministic seeds selected!')
+        seed_vals = np.linspace(0,len(embeddings)-1, num_inits)
+    else:
+        print('random seeds selected!')
+        seed_vals = np.random.choice(np.arange(len(embeddings)), num_inits)
+
 
     if cl_args.delta == 'adaptive':
         print('adaptive delta selected - computing delta based off pairwise distances')
@@ -89,7 +97,9 @@ if __name__ == '__main__':
     else:
         cl_args.delta = float(cl_args.delta)
 
-    for init_indx in range(len(embeddings)):
+    for run_indx, init_indx in enumerate(seed_vals):
+
+        init_indx = int(init_indx)
         print(f'\nrunning initialization {init_indx}/{num_inits}\n')
 
         init_point = embeddings[init_indx].copy()
@@ -108,8 +118,8 @@ if __name__ == '__main__':
         run_optim_fitnesses = [fitness_array_ga]
 
         for alg_indx, (embed, fit) in enumerate(zip(run_optim_embeddings, run_optim_fitnesses)):
-            optim_embedding_traj_array[init_indx, alg_indx] = embed
-            optim_fitness_traj_array[init_indx, alg_indx] = fit
+            optim_embedding_traj_array[run_indx, alg_indx] = embed
+            optim_fitness_traj_array[run_indx, alg_indx] = fit
 
     # save embeddings
     print("saving embeddings")
