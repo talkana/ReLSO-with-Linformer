@@ -436,6 +436,7 @@ def grad_ascent(initial_embedding, model, N_steps, lr, cycle=False,
     # data logging
     embed_dim = initial_embedding.shape[-1]
     out_embedding_array = np.zeros((N_steps, embed_dim))
+    out_seq_array = []
     out_fit_array = np.zeros(N_steps)
     
     # initial step
@@ -473,9 +474,11 @@ def grad_ascent(initial_embedding, model, N_steps, lr, cycle=False,
             curr_embedding = model.encode(nseq)
 
         curr_fit = model.regressor_module(curr_embedding)
+        curr_seq = model.decode(curr_embedding)
         
         # save step i info
         out_embedding_array[step] = curr_embedding.detach().numpy()
         out_fit_array[step] = curr_fit.detach().numpy()
+        out_seq_array.append(curr_seq)
         
-    return out_embedding_array, out_fit_array
+    return out_embedding_array, out_fit_array, out_seq_array

@@ -104,11 +104,12 @@ if __name__ == '__main__':
 
         # Gradient Ascent
         print("\n")
-        embedding_array_ga, fitness_array_ga = optim_algs.grad_ascent(initial_embedding=init_point.copy(),
+        embedding_array_ga, fitness_array_ga, out_seq_array = optim_algs.grad_ascent(initial_embedding=init_point.copy(),
                                                                       model=model,
                                                                       N_steps=n_steps,
                                                                       lr=0.1)
-
+        print(f"Shape of the first sequence: {out_seq_array[0].shape}, number of sequences: {len(out_seq_array)}")
+        print(f"First sequence: {out_seq_array[0]}")
         print(f'shape of output embedding array: {embedding_array_ga.shape}')
         print('init embed from output: {}'.format(embedding_array_ga[0][:10]))
 
