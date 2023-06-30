@@ -9,6 +9,8 @@
 
 [![Paper](https://img.shields.io/badge/arxiv-2006.06885-B31B1B.svg)](https://arxiv.org/abs/2201.09948)
 
+[![Paper](https://img.shields.io/badge/arxiv-2006.06885-B31B1B.svg)](https://arxiv.org/abs/2006.04768)
+
 [![DOI](https://zenodo.org/badge/436740631.svg)](https://zenodo.org/badge/latestdoi/436740631)
   
 </div>
@@ -31,9 +33,9 @@ The advancement of robust natural language models has increased the ability to l
 This repository is based on:
 
 * Egbert Castro, Abhinav Godavarthi, Julian Rubinfien, Kevin B. Givechian, Dhananjay Bhaskar, and Smita Krishnaswamy. 2022. ReLSO: A Transformer-based
-Model for Latent Space Optimization and Generation of Proteins. ArXiv:2201.09948
+Model for Latent Space Optimization and Generation of Proteins. [ArXiv:2201.09948](https://arxiv.org/abs/2201.09948)
 * [ReLSO-Guided-Generative-Protein-Design-using-Regularized-Transformers](https://github.com/KrishnaswamyLab/ReLSO-Guided-Generative-Protein-Design-using-Regularized-Transformers)
-* Sinong Wang, Belinda Z. Li, Madian Khabsa, Han Fang, and Hao Ma. 2020. Linformer: Self-Attention with Linear Complexity. ArXiv:2006.04768
+* Sinong Wang, Belinda Z. Li, Madian Khabsa, Han Fang, and Hao Ma. 2020. Linformer: Self-Attention with Linear Complexity. [ArXiv:2006.04768](https://arxiv.org/abs/2006.04768)
 
 ## How to run   
 ---
