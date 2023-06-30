@@ -1,0 +1,15 @@
+2023-06-29 17:08:25,642 DEBUG   MainThread:3027172 [wandb_config.py:_load_defaults():133] no defaults not found in config-defaults.yaml
+2023-06-29 17:08:25,650 DEBUG   MainThread:3027172 [meta.py:_setup_code_git():49] probe for git information
+2023-06-29 17:08:25,669 DEBUG   MainThread:3027172 [run_manager.py:__init__():547] Initialized sync for relso-optim/j8gnz8zt
+2023-06-29 17:08:25,670 INFO    MainThread:3027172 [run_manager.py:wrap_existing_process():1147] wrapping existing process 3027014
+2023-06-29 17:08:25,671 WARNING MainThread:3027172 [io_wrap.py:register():104] SIGWINCH handler was not None: <Handlers.SIG_DFL: 0>
+2023-06-29 17:08:25,810 INFO    MainThread:3027172 [run_manager.py:init_run():926] system metrics and metadata threads started
+2023-06-29 17:08:25,811 INFO    MainThread:3027172 [run_manager.py:wrap_existing_process():1164] informing user process we are ready to proceed
+2023-06-29 17:08:25,811 INFO    MainThread:3027172 [run_manager.py:_sync_etc():1296] entering loop for messages from user process
+2023-06-29 17:08:26,648 INFO    Thread-3  :3027172 [run_manager.py:_on_file_modified():692] file/dir modified: /home/nrutecka-nlp/ReLSO-with-Linformer/optim_logs/RelsoLin_k25_embed100relso1/TAPE/ns200/2023-06-29-17-08-23/wandb/run-20230629_150823-j8gnz8zt/wandb-history.jsonl
+2023-06-29 17:08:42,903 INFO    MainThread:3027172 [run_manager.py:_sync_etc():1319] received message from user process: {"exitcode": 0}
+2023-06-29 17:08:42,904 INFO    MainThread:3027172 [run_manager.py:_sync_etc():1406] closing log streams and sending exitcode to W&B
+2023-06-29 17:08:42,904 INFO    MainThread:3027172 [run_manager.py:shutdown():1070] shutting down system stats and metadata service
+ser process: {"exitcode": 0}
+2023-06-29 17:08:42,904 INFO    MainThread:3027172 [j8gnz8zt:run_manager.py:_sync_etc():1406] closing log streams and sending exitcode to W&B
+2023-06-29 17:08:42,904 INFO    MainThread:3027172 [j8gnz8zt:run_manager.py:shutdown():1070] shutting down system stats and metadata service

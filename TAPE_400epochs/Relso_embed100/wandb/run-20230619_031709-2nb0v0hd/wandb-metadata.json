@@ -1,0 +1,31 @@
+{
+    "root": "C:/Users/maria/Documents/Bioinformatyka_mgr/NLP/NLP_project/ReLSO-Guided-Generative-Protein-Design-using-Regularized-Transformers",
+    "program": "C:\\Users\\maria\\Documents\\Bioinformatyka_mgr\\NLP\\NLP_project\\ReLSO-Guided-Generative-Protein-Design-using-Regularized-Transformers\\train_relso.py",
+    "git": {
+        "remote": "https://github.com/KrishnaswamyLab/ReLSO-Guided-Generative-Protein-Design-using-Regularized-Transformers.git",
+        "commit": "521addbfce6bb46a7dff056095bd3b1997b6150e"
+    },
+    "email": "m.bochenek@student.uw.edu.pl",
+    "startedAt": "2023-06-19T03:17:10.572001",
+    "host": "Asus_Chleb",
+    "username": "maria",
+    "executable": "C:\\Users\\maria\\anaconda3\\envs\\relso\\python.exe",
+    "os": "Windows-10-10.0.22621-SP0",
+    "python": "3.9.16",
+    "cpu_count": 8,
+    "args": [
+        "--data",
+        "TAPE",
+        "--n_epochs",
+        "400",
+        "--n_gpus",
+        "1"
+    ],
+    "state": "finished",
+    "jobType": null,
+    "mode": "run",
+    "name": "run_relso_TAPE",
+    "project": "relso_project",
+    "heartbeatAt": "2023-06-19T11:34:57.460463",
+    "exitcode": 0
+}

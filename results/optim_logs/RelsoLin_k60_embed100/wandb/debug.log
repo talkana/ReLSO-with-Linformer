@@ -1,0 +1,14 @@
+2023-06-30 13:16:09,902 DEBUG   MainThread:3644654 [wandb_config.py:_load_defaults():133] no defaults not found in config-defaults.yaml
+2023-06-30 13:16:09,910 DEBUG   MainThread:3644654 [meta.py:_setup_code_git():49] probe for git information
+2023-06-30 13:16:09,934 DEBUG   MainThread:3644654 [run_manager.py:__init__():547] Initialized sync for relso-optim/158zjpci
+2023-06-30 13:16:10,152 INFO    MainThread:3644654 [run_manager.py:wrap_existing_process():1147] wrapping existing process 3644488
+2023-06-30 13:16:10,153 WARNING MainThread:3644654 [io_wrap.py:register():104] SIGWINCH handler was not None: <Handlers.SIG_DFL: 0>
+2023-06-30 13:16:10,291 INFO    MainThread:3644654 [run_manager.py:init_run():926] system metrics and metadata threads started
+2023-06-30 13:16:10,291 INFO    MainThread:3644654 [run_manager.py:wrap_existing_process():1164] informing user process we are ready to proceed
+2023-06-30 13:16:10,291 INFO    MainThread:3644654 [run_manager.py:_sync_etc():1296] entering loop for messages from user process
+2023-06-30 13:16:10,908 INFO    Thread-3  :3644654 [run_manager.py:_on_file_modified():692] file/dir modified: /home/nrutecka-nlp/ReLSO-with-Linformer/optim_logs_extra/RelsoLin_k60_embed100/wandb/run-20230630_111605-158zjpci/wandb-history.jsonl
+2023-06-30 13:16:30,537 INFO    MainThread:3644654 [run_manager.py:_sync_etc():1319] received message from user process: {"exitcode": 0}
+2023-06-30 13:16:30,537 INFO    MainThread:3644654 [run_manager.py:_sync_etc():1406] closing log streams and sending exitcode to W&B
+2023-06-30 13:16:30,537 INFO    MainThread:3644654 [run_manager.py:shutdown():1070] shutting down system stats and metadata service
+23-06-30 13:16:30,537 INFO    MainThread:3644654 [158zjpci:run_manager.py:_sync_etc():1406] closing log streams and sending exitcode to W&B
+2023-06-30 13:16:30,537 INFO    MainThread:3644654 [158zjpci:run_manager.py:shutdown():1070] shutting down system stats and metadata service

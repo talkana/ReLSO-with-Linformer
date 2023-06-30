@@ -31,6 +31,15 @@ class relso1(BaseModel):
         if isinstance(hparams, dict):
             hparams = argparse.Namespace(**hparams)
 
+        # workaround for loading trained relso models
+        if not hasattr(hparams, 'use_linformer'):
+            # Set the 'foo' attribute if it is not defined
+            setattr(hparams, 'use_linformer', False)
+
+        if not hasattr(hparams, 'linformer_k'):
+            # Set the 'foo' attribute if it is not defined
+            setattr(hparams, 'linformer_k', 0)
+
         self.save_hyperparameters()
         # self.hparams = hparams
 
