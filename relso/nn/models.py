@@ -11,7 +11,6 @@ from pytorch_lightning.core.lightning import LightningModule
 import argparse
 import wandb
 
-
 from relso.nn.bneck import BaseBottleneck
 
 from relso.nn.base import BaseModel
@@ -54,6 +53,10 @@ class relso1(BaseModel):
         self.gamma = hparams.gamma_val
 
         self.sigma = hparams.sigma_val
+
+        self.seq_len = hparams.seq_len
+        self.use_linformer = hparams.use_linformer
+        self.linformer_k = hparams.linformer_k
 
         try:
             self.eta = hparams.eta_val
@@ -116,6 +119,9 @@ class relso1(BaseModel):
             num_heads=self.nhead,
             dim_feedforward=self.hidden_dim,
             dropout=self.probs,
+            use_linformer=self.use_linformer,
+            seq_len=self.seq_len,
+            k=self.linformer_k
         )
         # make decoder)
         self._build_decoder(hparams)
@@ -149,8 +155,8 @@ class relso1(BaseModel):
         mask = (torch.triu(mask) == 1).transpose(0, 1)
         mask = (
             mask.float()
-            .masked_fill(mask == 0, float("-inf"))
-            .masked_fill(mask == 1, float(0.0))
+                .masked_fill(mask == 0, float("-inf"))
+                .masked_fill(mask == 1, float(0.0))
         )
         return mask
 
@@ -257,7 +263,7 @@ class relso1(BaseModel):
         return sub_z_interp
 
     def add_negative_samples(
-        self,
+            self,
     ):
 
         max2norm = torch.norm(self.z_rep, p=2, dim=1).max()
@@ -265,8 +271,8 @@ class relso1(BaseModel):
         rand_inds = torch.randperm(len(self.z_rep))
         if self.neg_focus:
             neg_z = (
-                0.5 * torch.randn_like(self.z_rep)[: self.neg_size]
-                + self.z_rep[rand_inds][: self.neg_size]
+                    0.5 * torch.randn_like(self.z_rep)[: self.neg_size]
+                    + self.z_rep[rand_inds][: self.neg_size]
             )
             neg_z = neg_z / torch.norm(neg_z, 2, dim=1).reshape(-1, 1)
             neg_z = neg_z * (max2norm * self.neg_norm)
@@ -354,7 +360,7 @@ class relso1(BaseModel):
 
         if self.dyn_neg_bool:
             pred_y = y_hat[: -self.neg_size]
-            extend_y = y_hat[-self.neg_size :]
+            extend_y = y_hat[-self.neg_size:]
         else:
             pred_y = y_hat
 
@@ -367,8 +373,8 @@ class relso1(BaseModel):
         if self.dyn_interp_bool:
             seq_preds = (
                 F.gumbel_softmax(x_hat, tau=1, dim=1, hard=True)
-                .transpose(1, 2)
-                .flatten(1, 2)
+                    .transpose(1, 2)
+                    .flatten(1, 2)
             )
             seq_dist_mat = torch.cdist(seq_preds, seq_preds, p=1)
 
@@ -387,7 +393,7 @@ class relso1(BaseModel):
         # negative sampling loss
         if self.dyn_neg_bool:
             neg_targets = (
-                torch.ones((self.neg_size), device=self.device) * self.neg_floor
+                    torch.ones((self.neg_size), device=self.device) * self.neg_floor
             )
             neg_loss = nn.MSELoss()(extend_y.flatten(), neg_targets.flatten())
             neg_loss = neg_loss * self.neg_weight
@@ -419,3 +425,4 @@ class relso1(BaseModel):
         }
 
         return total_loss, mloss_dict
+
