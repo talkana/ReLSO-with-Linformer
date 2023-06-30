@@ -1,0 +1,43 @@
+wandb_version: 1
+
+_wandb:
+  desc: null
+  value:
+    cli_version: 0.9.1
+    framework: torch
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    python_version: 3.8.10
+alpha:
+  desc: null
+  value: None
+dataset:
+  desc: null
+  value: TAPE
+delta:
+  desc: null
+  value: adaptive
+det_inits:
+  desc: null
+  value: true
+embeddings:
+  desc: null
+  value: TAPE_400epochs/RelsoLin_k60_embed20/train_embeddings.npy
+k:
+  desc: null
+  value: 5
+log_dir:
+  desc: null
+  value: optim_logs_extra/RelsoLin_k60_embed20
+log_iter:
+  desc: null
+  value: None
+n_steps:
+  desc: null
+  value: 200
+project_name:
+  desc: null
+  value: relso-optim
+weights:
+  desc: null
+  value: TAPE_400epochs/RelsoLin_k60_embed20/model_state.ckpt

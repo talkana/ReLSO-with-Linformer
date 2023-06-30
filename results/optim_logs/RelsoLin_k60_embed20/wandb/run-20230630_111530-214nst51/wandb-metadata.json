@@ -1,0 +1,34 @@
+{
+    "root": "/home/nrutecka-nlp/ReLSO-with-Linformer",
+    "program": "run_optim.py",
+    "git": {
+        "remote": "https://github.com/talkana/ReLSO-with-Linformer.git",
+        "commit": "76065ba7f1334f25501783837ed2f2172b224ff7"
+    },
+    "email": null,
+    "startedAt": "2023-06-30T11:15:32.741053",
+    "host": "asusgpu0",
+    "username": "nrutecka-nlp",
+    "executable": "/usr/bin/python3",
+    "os": "Linux-5.15.0-69-generic-x86_64-with-glibc2.29",
+    "python": "3.8.10",
+    "cpu_count": 40,
+    "args": [
+        "--weights",
+        "TAPE_400epochs/RelsoLin_k60_embed20/model_state.ckpt",
+        "--embeddings",
+        "TAPE_400epochs/RelsoLin_k60_embed20/train_embeddings.npy",
+        "--dataset",
+        "TAPE",
+        "--det_inits",
+        "--log_dir",
+        "optim_logs_extra/RelsoLin_k60_embed20"
+    ],
+    "state": "finished",
+    "jobType": null,
+    "mode": "dryrun",
+    "name": "run_relso1_TAPE",
+    "project": "relso-optim",
+    "heartbeatAt": "2023-06-30T11:15:56.669984",
+    "exitcode": 0
+}
