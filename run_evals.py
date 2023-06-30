@@ -1,28 +1,21 @@
-
 import os
 import numpy as np
 import argparse
 from argparse import ArgumentParser
 from sklearn.decomposition import PCA
-from phate import PHATE
-
 
 import wandb
 from pytorch_lightning.loggers import WandbLogger
 import datetime
-
 
 import matplotlib.pyplot as plt
 
 import torch
 import torch.nn as nn
 
-import relso.grad.models as hmodels
 import relso.data as hdata
-
 from relso.optim import utils, optim_algs
 from relso.utils import eval_utils
-
 
 def str2bool(v):
     if isinstance(v, bool):
@@ -33,8 +26,6 @@ def str2bool(v):
         return False
     else:
         raise argparse.ArgumentTypeError('Boolean value expected.')
-
-
 
 if __name__ == '__main__':
 
