@@ -1,23 +1,20 @@
-
 import numpy as np
 
 import matplotlib.pyplot as plt
 import seaborn as sns
 
 import wandb
-from phate import PHATE
 from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
 from mpl_toolkits.mplot3d import Axes3D
-from scipy.interpolate import griddata
-
+# from scipy.interpolate import griddata
 
 import torch 
 import torch.nn as nn
 import pytorch_lightning as pl
 from pytorch_lightning.callbacks.early_stopping import EarlyStopping
 
-import relso.grad.models as hmodels
+import relso.nn.models as hmodels
 import relso.utils.eval_utils as heval_utils
 
 
@@ -31,8 +28,6 @@ def import_model_from_ckpt(model_name, path_to_ckpt_file):
     print(f'loaded {model_name} model from {path_to_ckpt_file}')
 
     return loaded_model
-
-
 
 
 def train_prediction_head(model, data, wandb_logger, e2e_train=False):
@@ -207,9 +202,6 @@ def train_reconstruction_head(model, data, wandb_logger, e2e_train=False):
 def plot_embedding(embeddings, fitness, wandb_logger, save_path, plot_type='PCA'):
     if plot_type == 'PCA':
         emb_coords = PCA(n_components=2).fit_transform(embeddings)
-    
-    elif plot_type == 'PHATE':
-        emb_coords = PHATE(n_components=2).fit_transform(embeddings)
 
     elif plot_type == 'TSNE':
         emb_coords = TSNE(n_components=2).fit_transform(embeddings)
@@ -251,9 +243,6 @@ def plot_multiple_optim_traj(embeddings, fitness, optim_embeddings_list,
     # all_fitness_vals = np.concatenate([fitness] + )
     if plot_type == 'PCA':
         all_coords = PCA(n_components=2).fit_transform(all_embeddings)
-    
-    elif plot_type == 'PHATE':
-        all_coords = PHATE(n_components=2).fit_transform(all_embeddings)
     
     elif plot_type == 'TSNE':
         all_coords = TSNE(n_components=2).fit_transform(all_embeddings)
@@ -432,9 +421,6 @@ def plot_embedding_end_points(embeddings, fitness, optim_embeddings, algo_name, 
 
     if plot_type == 'PCA':
         all_coords = PCA(n_components=2).fit_transform(all_embeddings)
-    
-    elif plot_type == 'PHATE':
-        all_coords = PHATE(n_components=2).fit_transform(all_embeddings)
 
     elif plot_type == 'TSNE':
         all_coords = TSNE(n_components=2).fit_transform(all_embeddings)
@@ -462,6 +448,3 @@ def plot_embedding_end_points(embeddings, fitness, optim_embeddings, algo_name, 
     
     if wandb_logger:
         wandb_logger.experiment.log({f'LSO ending points  {plot_type} {algo_name}': wandb.Image(plt)})
-
-
-
