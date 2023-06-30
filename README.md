@@ -26,7 +26,7 @@ for Sequence Design
 
 ## Description
 ---
-The advancement of robust natural language models has increased the ability to learn meaningful representations of protein sequences. Deep transformer-based autoencoders such as [ReLSO](https://arxiv.org/abs/2201.09948) can be trained to jointly generate sequences as well as predict their fitness due to their highly structured latent space. However training and deploying this model can be costly due to its use of the standard self-attention mechanism. To address this, we propose LinReLSO, a model that incorporates the ReLSO architecture with [Linformer](https://arxiv.org/abs/2006.04768) self-attention, and we evaluate its performance in comparison to the original architecture. Our findings demonstrate that LinReLSO not only consumes less resources and speeds up computations but also surpasses the original model in terms of both reconstruction and prediction accuracy.
+ The advancement of robust natural language models has increased the ability to learn meaningful representations of protein sequences. Deep transformer-based autoencoders such as [ReLSO](https://arxiv.org/abs/2201.09948) can be trained to jointly generate sequences as well as predict their fitness due to their highly structured latent space. However training and deploying this model can be costly due to its use of the standard self-attention mechanism. To address this, we propose LinReLSO, a model that incorporates the ReLSO architecture with [Linformer](https://arxiv.org/abs/2006.04768) self-attention, and we evaluate its performance in comparison to the original architecture. Our findings demonstrate that LinReLSO not only consumes less resources and speeds up computations but also surpasses the original model in terms of both reconstruction and prediction accuracy.
 
 ## Citation
 
@@ -43,7 +43,7 @@ Model for Latent Space Optimization and Generation of Proteins. [ArXiv:2201.0994
 First, install dependencies   
 ```bash
 # clone project   
-git clone https://github.com/KrishnaswamyLab/ReLSO-Guided-Generative-Protein-Design-using-Regularized-Transformers.git
+git clone https://github.com/talkana/ReLSO-with-Linformer.git
 
 # install requirements
 
@@ -60,7 +60,7 @@ pip install -r requirements.txt
  
  ```bash
 # run training script
-python train_relso.py  --data gifford
+python train_relso.py  --data TAPE
 ```
 ---
 *note: if arg option is not relevant to current model selection, it will not be used. See init method of each model to see what's used.
