@@ -77,7 +77,7 @@ if __name__ == "__main__":
     if cl_args.save_dir:
         main_save_dir = cl_args.save_dir
     else:
-        models_path = f"train_logs/relso/{cl_args.dataset}/*"
+        main_save_path = f"./figures/{cl_args.dataset}/*"
 
     plot_embeddings(models_path, main_save_dir, plot_3D=False)
     ####################################################################################################
