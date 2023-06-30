@@ -36,7 +36,7 @@ if __name__ == '__main__':
     date_suffix = now.strftime("%Y-%m-%d-%H-%M-%S")
 
     if cl_args.log_dir:
-        save_dir = cl_args.log_dir + f'relso1/{cl_args.dataset}/ns{cl_args.n_steps}/{date_suffix}/'
+        save_dir = cl_args.log_dir
 
     else:
         save_dir = f'optim_logs/relso1/{cl_args.dataset}/ns{cl_args.n_steps}/{date_suffix}/'

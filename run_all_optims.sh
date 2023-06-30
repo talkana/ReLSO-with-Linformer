@@ -1,6 +1,6 @@
 #!/bin/bash
 
-models=("Relso" "RelsoLin_k25")
+models=("Relso" "RelsoLin_k25", "RelsoLin_k60")
 embed_sizes=(20 100)
 
 for model in "${models[@]}"; do
