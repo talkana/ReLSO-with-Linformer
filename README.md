@@ -26,7 +26,7 @@ for Sequence Design
 
 ## Description
 ---
- The advancement of robust natural language models has increased the ability to learn meaningful representations of protein sequences. Deep transformer-based autoencoders such as [ReLSO](https://arxiv.org/abs/2201.09948) can be trained to jointly generate sequences as well as predict their fitness due to their highly structured latent space. However training and deploying this model can be costly due to its use of the standard self-attention mechanism. To address this, we propose LinReLSO, a model that incorporates the ReLSO architecture with [Linformer](https://arxiv.org/abs/2006.04768) self-attention, and we evaluate its performance in comparison to the original architecture. Our findings demonstrate that LinReLSO not only consumes less resources and speeds up computations but also surpasses the original model in terms of both reconstruction and prediction accuracy.
+ The advancement of robust natural language models has increased the ability to learn meaningful representations of protein sequences. Deep transformer-based autoencoders such as [ReLSO](https://arxiv.org/abs/2201.09948) can be trained to jointly generate sequences as well as predict their fitness due to their highly structured latent space. However training and deploying this model can be costly due to its use of the standard self-attention mechanism. To address this, we propose LinReLSO, a model that incorporates the ReLSO architecture with [Linformer](https://arxiv.org/abs/2006.04768) self-attention, and we evaluate its performance in comparison to the original architecture. Our findings demonstrate that LinReLSO not only consumes less resources and speeds up computations but also surpasses the original model in terms of both reconstruction and prediction accuracy. For detailed results and insights, please refer to the final_paper.pdf file.
 
 ## Citation
 
@@ -69,9 +69,6 @@ python train_relso.py  --data TAPE
 
         gifford, GB1_WU, GFP, TAPE
 
-### available auxnetwork args:
-
-        base_reg
 
 ### Running optimization algorithms 
  
